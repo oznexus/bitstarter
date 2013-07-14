@@ -83,6 +83,7 @@ var checkURL = function(url) {
     return true;
 };
 
+// Todo Remove or use
 var getURL = function(url) {
     //return the url as a string
     rest.get(url).on('complete', function( result ){
@@ -94,6 +95,8 @@ var getURL = function(url) {
 	});
 };
 
+
+
 if(require.main == module) {
     program
         .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
@@ -103,12 +106,27 @@ if(require.main == module) {
         .parse(process.argv);
     // TODO Refactor duplication
     if(program.url) {
-	console.log("A url or something was detected");
-	var htmlString = getURL(program.url);
-	console.log("htmlString: " + htmlString);
-	var checkJson = checkHtmlString(getURL(program.url), program.checks);
-	var outJson = JSON.stringify(checkJson, null, 4);
-	console.log(outJson);
+	// console.log("A url or something was detected");
+	// var htmlString = getURL(program.url);
+	// console.log("htmlString: " + htmlString);
+	// var checkJson = checkHtmlString(getURL(program.url), program.checks);
+	
+
+	// var checkJson = checkHtmlString(
+
+
+
+
+	    rest.get(program.url).on('complete', function( result ){
+		// console.log(result);
+		var checkJson = checkHtmlString(result, program.checks);
+		var outJson = JSON.stringify(checkJson, null, 4);
+		// console.log("--------------------");
+		console.log(outJson);
+	    }
+	)
+
+
 	} else {
 	    var checkJson = checkHtmlFile(program.file, program.checks);
 	    var outJson = JSON.stringify(checkJson, null, 4);
