@@ -24,8 +24,12 @@ References:
 var fs = require('fs');
 var program = require('commander');
 var cheerio = require('cheerio');
+
+var rest = require('restler');
+
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
+var URL_DEFAULT = "http://google.com" ; // TODO Do something sensible.
 
 var assertFileExists = function(infile) {
     var instr = infile.toString();
@@ -61,11 +65,22 @@ var clone = function(fn) {
     return fn.bind({});
 };
 
+var checkURL = function(url) {
+    // TODO 
+    return true;
+};
+
+
 if(require.main == module) {
     program
         .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
+        .option('-u, --url <url>', 'Path to url') // TODO Check if url is valid
         .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
         .parse(process.argv);
+
+    if(program.url) {
+	console.log("A url was detected");
+	}
     var checkJson = checkHtmlFile(program.file, program.checks);
     var outJson = JSON.stringify(checkJson, null, 4);
     console.log(outJson);
