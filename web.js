@@ -2,9 +2,10 @@
 var express = require('express');
 
 var fs = require('fs');
-// It seems that this is depreciated
-//var app = express.createServer(express.logger());
-var app = express();
+// It seems that this is depreciated ... but I'm putting it back
+// because the alternative is not compatable with something in my heroku setup.
+var app = express.createServer(express.logger());
+//var app = express();
 
 
 // This is no good if we want immediate feedback in the browser
